@@ -107,7 +107,7 @@ function Square(props) {
     render() {
     const history = this.state.history;
     const current = history[history.length - 1];
-    const winner = calculateWinner(current.squares);
+    const winner = calculateWinner(current.square);
 
     let status;
     if (winner) {
@@ -120,7 +120,7 @@ function Square(props) {
       <div className="game">
         <div className="game-board">
           <Board
-            squares={current.squares}
+            squares={current.square}
             onClick={(i) => this.handleClick(i)}
           />
         </div>
