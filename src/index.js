@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 
 
@@ -139,9 +139,6 @@ class Game extends React.Component {
     }
 
     return (
-      <Router>
-        <Switch>
-          <Route path="/game">
             <div className="game">
               <div className="game-board">
                 <Board
@@ -155,9 +152,6 @@ class Game extends React.Component {
               </div>
 
             </div>
-          </Route>
-        </Switch>
-      </Router>
     );
   }
 }
@@ -165,9 +159,9 @@ class Game extends React.Component {
 class LoginForm extends React.Component{
   render(){
     return(
-      <form>
-        
-      </form>
+      <div>
+        Hello
+      </div>
     )
   }
 }
@@ -182,4 +176,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 function loginSuccess() {
   root.render(<Game />);
 }
-root.render(<LoginForm />);
+root.render(
+  <Router>
+    <Switch>
+      <Route path="/game"> <Game /> </Route>
+      <Route path="/"><LoginForm /> </Route>
+    </Switch>
+  </Router>
+);
