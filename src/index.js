@@ -139,28 +139,72 @@ class Game extends React.Component {
     }
 
     return (
-            <div className="game">
-              <div className="game-board">
-                <Board
-                  squares={current.square}
-                  onClick={(i) => this.handleClick(i)}
-                />
-              </div>
-              <div className="game-info">
-                <div>{status}</div>
-                <ol>{moves}</ol>
-              </div>
-
-            </div>
+      <div className="game">
+        <div className="game-board">
+          <Board
+            squares={current.square}
+            onClick={(i) => this.handleClick(i)}
+          />
+        </div>
+        <div className="game-info">
+          <div>{status}</div>
+          <ol>{moves}</ol>
+        </div>
+      </div>
     );
   }
 }
 
-class LoginForm extends React.Component{
-  render(){
-    return(
+
+class LoginForm extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      account: '',
+      password: '',
+      thisAccount: 'Honghai',
+      thisPassword: '123',
+      isLoggedIn:false
+    };
+    this.handleChangeAcc = this.handleChangeAcc.bind(this);
+    this.handleChangePw = this.handleChangePw.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSubmit(){
+    this.state.account.preventDefault();
+    this.state.password.preventDefault();
+
+    if(this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword){
+      this.setState({isLoggedIn : !isLoggedIn});
+      loginSuccess()
+    } else return;
+  }
+
+  handleChangeAcc(event) {
+    this.setState({
+      account: event.target.value
+    });
+  }
+
+  handleChangePw(event) {
+    this.setState({
+      password: event.target.value
+    });
+  }
+
+
+
+  render() {
+    return (
       <div>
-        Hello
+        <form onSubmit={() =>{this.handleSubmit(); loginSuccess()}}>
+          <input value={this.state.account} onChange={this.handleChangeAcc}></input>
+          <input value={this.state.password} onChange={this.handleChangePw}></input>
+          <button type='submit'>Submit!</button>
+        </form>
+        <h1>{this.state.account}</h1>
+        <h1>{this.state.password}</h1>
       </div>
     )
   }
