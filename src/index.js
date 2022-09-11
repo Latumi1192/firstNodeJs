@@ -172,8 +172,8 @@ class LoginForm extends React.Component {
   }
 
   handleSubmit(){
-    this.state.account.preventDefault();
-    this.state.password.preventDefault();
+    //this.state.account.preventDefault();
+    //this.state.password.preventDefault();
 
     if(this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword){
       this.setState({isLoggedIn : !isLoggedIn});
