@@ -137,24 +137,26 @@ class Game extends React.Component {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
-    return (
-      <div className="game">
-        <div className="game-board">
-          <Board
-            squares={current.square}
-            onClick={(i) => this.handleClick(i)}
-          />
+    if (isLoggedIn) {
+      return (
+        <div className="game">
+          <div className="game-board">
+            <Board
+              squares={current.square}
+              onClick={(i) => this.handleClick(i)}
+            />
+          </div>
+          <div className="game-info">
+            <div>{status}</div>
+            <ol>{moves}</ol>
+          </div>
         </div>
-        <div className="game-info">
-          <div>{status}</div>
-          <ol>{moves}</ol>
-        </div>
-      </div>
-    );
+      );
+    } else return <Redirect to={'/'} />
   }
 }
 
-
+var isLoggedIn = false;
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -172,6 +174,7 @@ class LoginForm extends React.Component {
   handleSubmit() {
     if (this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword) {
       this.setState({ isLoggedIn: true });
+      isLoggedIn = true;
     } else return;
   }
 
@@ -181,21 +184,22 @@ class LoginForm extends React.Component {
         <div>
           <form onSubmit={() => { this.handleSubmit(); }}>
             <div>
-              <input placeholder='Account' onChange={e => this.setState({account: e.target.value})}></input>
+              <input placeholder='Account' onChange={e => this.setState({ account: e.target.value })}></input>
             </div>
             <div>
-              <input placeholder='Password' onChange={e => this.setState({password: e.target.value})}></input>
+              <input placeholder='Password' onChange={e => this.setState({ password: e.target.value })}></input>
             </div>
             <div>
               <button type='submit'>Submit!</button>
             </div>
           </form>
-        
         </div>
       )
     } else return <Redirect to={'/game'} />
   }
 }
+
+
 
 
 // ========================================
