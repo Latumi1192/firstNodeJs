@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 
 
 
@@ -18,7 +18,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 //       );
 //     }
 //   }
-var isLoggedIn = false;
 
 
 function Square(props) {
@@ -164,67 +163,49 @@ class LoginForm extends React.Component {
       password: '',
       thisAccount: 'Honghai',
       thisPassword: '123',
-      isLoggedIn:false
+      isLoggedIn: false
     };
-    this.handleChangeAcc = this.handleChangeAcc.bind(this);
-    this.handleChangePw = this.handleChangePw.bind(this);
+
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(){
-    //this.state.account.preventDefault();
-    //this.state.password.preventDefault();
-
-    if(this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword){
-      this.setState({isLoggedIn : !isLoggedIn});
-      loginSuccess()
+  handleSubmit() {
+    if (this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword) {
+      this.setState({ isLoggedIn: true });
     } else return;
   }
 
-  handleChangeAcc(event) {
-    this.setState({
-      account: event.target.value
-    });
-  }
-
-  handleChangePw(event) {
-    this.setState({
-      password: event.target.value
-    });
-  }
-
-
-
   render() {
-    return (
-      <div>
-        <form onSubmit={() =>{this.handleSubmit(); loginSuccess()}}>
-          <input value={this.state.account} onChange={this.handleChangeAcc}></input>
-          <input value={this.state.password} onChange={this.handleChangePw}></input>
-          <button type='submit'>Submit!</button>
-        </form>
-        <h1>{this.state.account}</h1>
-        <h1>{this.state.password}</h1>
-      </div>
-    )
+    if (!this.state.isLoggedIn) {
+      return (
+        <div>
+          <form onSubmit={() => { this.handleSubmit(); }}>
+            <div>
+              <input placeholder='Account' onChange={e => this.setState({account: e.target.value})}></input>
+            </div>
+            <div>
+              <input placeholder='Password' onChange={e => this.setState({password: e.target.value})}></input>
+            </div>
+            <div>
+              <button type='submit'>Submit!</button>
+            </div>
+          </form>
+        
+        </div>
+      )
+    } else return <Redirect to={'/game'} />
   }
 }
-
-
-
 
 
 // ========================================
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-function loginSuccess() {
-  root.render(<Game />);
-}
 root.render(
   <Router>
     <Switch>
-      <Route path="/game"> <Game /> </Route>
-      <Route path="/"><LoginForm /> </Route>
+      <Route exact path="/game"> <Game /> </Route>
+      <Route exact path="/"><LoginForm /> </Route>
     </Switch>
   </Router>
 );
