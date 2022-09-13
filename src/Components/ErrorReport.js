@@ -10,7 +10,7 @@ function ErrorReport() {
         </div>
     </div>);
 
-    return true ? errorPage : <Redirect to={'/'} />;
+    return login ? errorPage : <Redirect to={'/'} />;
 
 }
 

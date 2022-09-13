@@ -92,7 +92,7 @@ class Game extends React.Component {
             </div>
         </div>)
 
-        return true ? gameBoard : <Redirect to={'/'} />;
+        return login ? gameBoard : <Redirect to={'/'} />;
 
     }
 }
