@@ -150,6 +150,9 @@ class Game extends React.Component {
             <div>{status}</div>
             <ol>{moves}</ol>
           </div>
+          <div>
+            <button onClick={e => window.location.href = '/'}>Logout</button>
+          </div>
         </div>
       );
     } else return <Redirect to={'/'} />
@@ -174,10 +177,10 @@ class LoginForm extends React.Component {
 
   handleSubmit() {
     if (this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword) {
-      this.setState({ 
+      this.setState({
         isLoggedIn: true,
         failedLoggedIn: false
-       });
+      });
       isLoggedIn = true;
     } else {
       this.setState({ failedLoggedIn: true });
@@ -201,8 +204,15 @@ class LoginForm extends React.Component {
           </form>
         </div>
       )
-    } else if(!this.state.isLoggedIn && this.state.failedLoggedIn){
-      return (<div>Please check your Account and Password</div>)
+    } else if (!this.state.isLoggedIn && this.state.failedLoggedIn) {
+      return (
+        <div>
+          <div>Please check your Account and Password</div>
+          <div>
+            <button onClick={e => window.location.href = '/'}>Back</button>
+          </div>
+        </div>
+      )
     } else return <Redirect to={'/game'} />
   }
 }
