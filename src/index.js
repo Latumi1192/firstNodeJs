@@ -165,7 +165,8 @@ class LoginForm extends React.Component {
       password: '',
       thisAccount: 'Honghai',
       thisPassword: '123',
-      isLoggedIn: false
+      isLoggedIn: false,
+      failedLoggedIn: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -173,13 +174,18 @@ class LoginForm extends React.Component {
 
   handleSubmit() {
     if (this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword) {
-      this.setState({ isLoggedIn: true });
+      this.setState({ 
+        isLoggedIn: true,
+        failedLoggedIn: false
+       });
       isLoggedIn = true;
-    } else return;
+    } else {
+      this.setState({ failedLoggedIn: true });
+    }
   }
 
   render() {
-    if (!this.state.isLoggedIn) {
+    if (!this.state.isLoggedIn && !this.state.failedLoggedIn) {
       return (
         <div>
           <form onSubmit={() => { this.handleSubmit(); }}>
@@ -195,6 +201,8 @@ class LoginForm extends React.Component {
           </form>
         </div>
       )
+    } else if(!this.state.isLoggedIn && this.state.failedLoggedIn){
+      return (<div>Please check your Account and Password</div>)
     } else return <Redirect to={'/game'} />
   }
 }
