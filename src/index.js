@@ -160,6 +160,7 @@ class Game extends React.Component {
 }
 
 var isLoggedIn = false;
+var failedLoggedIn = false;
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -182,8 +183,11 @@ class LoginForm extends React.Component {
         failedLoggedIn: false
       });
       isLoggedIn = true;
+      failedLoggedIn = false;
     } else {
       this.setState({ failedLoggedIn: true });
+      failedLoggedIn = true;
+
     }
   }
 
@@ -205,17 +209,23 @@ class LoginForm extends React.Component {
         </div>
       )
     } else if (!this.state.isLoggedIn && this.state.failedLoggedIn) {
-      return (
-        <div>
-          <div>Please check your Account and Password</div>
-          <div>
-            <button onClick={e => window.location.href = '/'}>Back</button>
-          </div>
-        </div>
-      )
+      return <Redirect to={'/error'} />
     } else return <Redirect to={'/game'} />
   }
 }
+
+function ErrorReport(){
+  if(failedLoggedIn){
+  return (
+    <div>
+      <div>Please check your Account and Password</div>
+      <div>
+        <button onClick={e => window.location.href = '/'}>Back</button>
+      </div>
+    </div>
+  )} else return <Redirect to={'/'} />
+}
+
 
 
 
@@ -227,6 +237,7 @@ root.render(
   <Router>
     <Switch>
       <Route exact path="/game"> <Game /> </Route>
+      <Route exact path="/error"><ErrorReport/></Route>
       <Route exact path="/"><LoginForm /> </Route>
     </Switch>
   </Router>
