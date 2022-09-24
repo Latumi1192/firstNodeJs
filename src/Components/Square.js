@@ -1,10 +1,12 @@
 import React from 'react';
+import Button from '@mui/material/Button';
+
 
 function Square(props) {
     return (
-      <button className="square" onClick={props.onClick}>
+      <Button variant="outlined" sx={{ width: 20, height: 60}} className="square" onClick={props.onClick}>
         {props.value}
-      </button>
+      </Button>
     );
   }
 

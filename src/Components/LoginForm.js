@@ -1,6 +1,9 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { BrowserRouter as Redirect } from 'react-router-dom';
+import Box from '@mui/material/Box';
+
+
 
 
 class LoginForm extends React.Component {
@@ -27,7 +30,18 @@ class LoginForm extends React.Component {
     
 
     render(){
-        const loginPage = (<div>
+        const loginPage = (
+            <Box
+            sx={{
+              width: 300,
+              height: 300,
+              backgroundColor: 'primary.dark',
+              '&:hover': {
+                backgroundColor: 'primary.main',
+                opacity: [0.9, 0.8, 0.7],
+              },
+            }}
+          ><div>
             <form onSubmit={() => { this.handleSubmit(); }}>
                 <div>
                     <input placeholder='Account' onChange={e => this.setState({ account: e.target.value })}></input>
@@ -39,7 +53,8 @@ class LoginForm extends React.Component {
                     <button type='submit'>Submit!</button>
                 </div>
             </form>
-        </div>)
+        </div>
+        </Box>)
         if (!this.state.isLoggedIn && !this.state.failedLoggedIn) {
             return loginPage
         } else if (!this.state.isLoggedIn && this.state.failedLoggedIn) {

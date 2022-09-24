@@ -1,16 +1,24 @@
 import React from 'react';
-import { BrowserRouter as Redirect } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle'
+
+//import { BrowserRouter as Redirect } from 'react-router-dom';
 
 function ErrorReport() {
 
     const errorPage = (<div>
-        <div>Please check your Account and Password</div>
+        <Alert severity="error">
+            <AlertTitle>Error</AlertTitle>
+            <strong>Please check your Account and Password</strong>
+        </Alert>
         <div>
-            <button onClick={e => window.location.href = '/'}>Back</button>
+            <Button variant="text" onClick={e => window.location.href = '/'}>Back</Button>
         </div>
     </div>);
 
-    return login ? errorPage : <Redirect to={'/'} />;
+    //  return login ? errorPage : <Redirect to={'/'} />;
+    return errorPage;
 
 }
 

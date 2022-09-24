@@ -1,6 +1,8 @@
 import React from 'react';
 import Board from './Board';
-import { BrowserRouter as Redirect } from 'react-router-dom';
+import Button from '@mui/material/Button';
+
+//import { BrowserRouter as Redirect } from 'react-router-dom';
 
 function calculateWinner(squares) {
     const lines = [
@@ -32,7 +34,7 @@ class Game extends React.Component {
                 square: Array(9).fill(null),
             }],
             xIsNext: true,
-            stepNumber: 0
+            stepNumber: 0,
         };
     }
 
@@ -69,7 +71,7 @@ class Game extends React.Component {
             const desc = move ? 'Go to move: ' + move : 'Go to game start';
             return (
                 <li key={move}>
-                    <button onClick={() => this.jumpTo(move)}>{desc}</button>
+                    <Button variant="text" size="small" onClick={() => this.jumpTo(move)}>{desc}</Button>
                 </li>
             );
         });
@@ -88,11 +90,12 @@ class Game extends React.Component {
                 <ol>{moves}</ol>
             </div>
             <div>
-                <button onClick={e => window.location.href = '/'}>Logout</button>
+                <Button variant="contained" onClick={e => window.location.href = '/'}>Logout</Button>
             </div>
         </div>)
 
-        return login ? gameBoard : <Redirect to={'/'} />;
+       // return this.props.login ? gameBoard : <Redirect to={'/'} />;
+       return gameBoard;
 
     }
 }
