@@ -17,36 +17,65 @@ class LoginForm extends React.Component {
     this.state = {
       account: '',
       password: '',
-      thisAccount: 'Honghai',
-      thisPassword: '123',
+      signupaccount:'',
+      signuppassword:'',
+      // thisAccount: 'Honghai',
+      // thisPassword: '123',
+      accountArray:[{account:'Honghai',password:'123'}],
       isLoggedIn: false,
       failedLoggedIn: false
     };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignup = this.handleSignup.bind(this);
   }
 
-  handleSubmit() {
-    const validInput = this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword;
-    validInput ? this.setState({ isLoggedIn: true, failedLoggedIn: false }) : this.setState({ failedLoggedIn: true });
+  handleLogin() {
+    let signuped = false;
+    for(let i = 0; i<this.state.accountArray.length; i++){
+      if(this.state.accountArray[i].account === this.state.account && this.state.accountArray[i].password === this.state.password) signuped = true;
+    }
+    
+    //const validInput = this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword;
+    signuped ? this.setState({ isLoggedIn: true, failedLoggedIn: false }) : this.setState({ failedLoggedIn: true });
   }
+
+  handleSignup(){
+    const newAcc = {account:this.state.signupaccount, password:this.state.signuppassword};
+    this.setState({signupaccount:'',signuppassword:''});
+    this.state.accountArray.push(newAcc);
+  }
+
+
 
   render() {
     const loginPage = (
       <div>
-        
-        <Box
+        <div>
+          <Box
             autoComplete="off"
           >
-            <form onSubmit={() => { this.handleSubmit(); }}>
-            <TextField placeholder='Enter your username' label="Account" variant="outlined" onChange={e => this.setState({ account: e.target.value })} />
-            <TextField placeholder='Enter your password' label="Password" variant="outlined" onChange={e => this.setState({ password: e.target.value })} />
-            <Button variant="contained" type='submit'>Submit!</Button>
+            <form onSubmit={() => { this.handleLogin(); }}>
+              <TextField placeholder='Enter your username' label="Account" variant="outlined" onChange={e => this.setState({ account: e.target.value })} />
+              <TextField placeholder='Enter your password' label="Password" variant="outlined" onChange={e => this.setState({ password: e.target.value })} />
+              <Button variant="contained" type='submit'>Login!</Button>
             </form>
           </Box>
-          
+        </div>
+        <div>
+          <Box
+            autoComplete="off"
+          >
+            <form onSubmit={() => { this.handleSignup(); }}>
+              <TextField placeholder='Enter your username' label="Account" variant="outlined" onChange={e => this.setState({ signupaccount: e.target.value })} />
+              <TextField placeholder='Enter your password' label="Password" variant="outlined" onChange={e => this.setState({ signuppassword: e.target.value })} />
+              <Button variant="contained" type='submit'>Signup!</Button>
+            </form>
+          </Box>
+        </div>
       </div>
     )
+
     if (!this.state.isLoggedIn && !this.state.failedLoggedIn) {
       return loginPage
     } else if (!this.state.isLoggedIn && this.state.failedLoggedIn) {
