@@ -44,6 +44,8 @@ class LoginForm extends React.Component {
     const newAcc = {account:this.state.signupaccount, password:this.state.signuppassword};
     this.setState({signupaccount:'',signuppassword:''});
     this.state.accountArray.push(newAcc);
+    console.log(newAcc)
+    console.log(this.state.accountArray)
   }
 
 
