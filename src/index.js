@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 
 
-
+let signin = false;
 
 class LoginForm extends React.Component {
   constructor(props) {
@@ -31,13 +31,11 @@ class LoginForm extends React.Component {
   }
 
   handleLogin() {
-    let signuped = false;
     for(let i = 0; i<this.state.accountArray.length; i++){
-      if(this.state.accountArray[i].account === this.state.account && this.state.accountArray[i].password === this.state.password) signuped = true;
+      if(this.state.accountArray[i].account === this.state.account && this.state.accountArray[i].password === this.state.password) signin = true;
     }
     
-    //const validInput = this.state.account === this.state.thisAccount && this.state.password === this.state.thisPassword;
-    signuped ? this.setState({ isLoggedIn: true, failedLoggedIn: false }) : this.setState({ failedLoggedIn: true });
+    signin ? this.setState({ isLoggedIn: true, failedLoggedIn: false }) : this.setState({ failedLoggedIn: true });
   }
 
   handleSignup(){
@@ -87,14 +85,16 @@ class LoginForm extends React.Component {
 
 }
 
+
+
 // ========================================
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Router>
     <Switch>
-      <Route exact path="/game"> <Game /> </Route>
       <Route exact path="/error"><ErrorReport /></Route>
       <Route exact path="/"><LoginForm /> </Route>
+      <Route exact path="/game"> <Game /> </Route>
     </Switch>
   </Router>
 );

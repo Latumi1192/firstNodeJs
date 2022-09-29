@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Board from './Board'
 import Button from '@mui/material/Button'
+import PropTypes from 'prop-types'
+
+
+
 
 function calculateWinner (squares) {
   const lines = [
@@ -23,39 +27,39 @@ function calculateWinner (squares) {
 }
 
 function Game () {
-  let GameState = {
-    history: [{
-      square: Array(9).fill(null)
-    }],
-    xIsNext: true,
-    stepNumber: 0
+  const [xIsNext, setX] = useState(true)
+  const [stepNumber, setStep] = useState(0)
+  const [history, setHistory] = useState([{ square: Array(9).fill(null) }])
+
+  Game.propTypes ={
+    signIn: PropTypes.bool
   }
 
   function jumpTo (step) {
-    GameState.stepNumber = step
-    GameState.xIsNext = (step % 2) === 0
+    setStep(step)
+    setX((step % 2) === 0)
   }
 
   function handleClick (i) {
-    const history = GameState.history.slice(0, GameState.stepNumber + 1)
-    const current = history[history.length - 1]
+    const tmpHistory = history.slice(0, stepNumber + 1)
+    const current = tmpHistory[tmpHistory.length - 1]
     const square = current.square.slice()
+
     if (calculateWinner(square) || square[i]) {
       return
     }
-    square[i] = GameState.xIsNext ? 'X' : 'O'
-    GameState = {
-      history: history.concat([{ square }]),
-      stepNumber: history.length,
-      xIsNext: !GameState.xIsNext
-    }
+    square[i] = xIsNext ? 'X' : 'O'
+
+    setHistory(tmpHistory.concat([{ square }]))
+    setStep(tmpHistory.length)
+    setX(!xIsNext)
   }
 
-  const history = GameState.history
-  const current = history[GameState.stepNumber]
+  const tmpHistory = history
+  const current = tmpHistory[stepNumber]
   const winner = calculateWinner(current.square)
 
-  const moves = history.map((step, move) => {
+  const moves = tmpHistory.map((step, move) => {
     const desc = move ? 'Go to move: ' + move : 'Go to game start'
     return (
       <li key={move}>
@@ -64,7 +68,7 @@ function Game () {
     )
   })
 
-  const status = winner ? 'Winner: ' + winner : 'Next player: ' + (GameState.xIsNext ? 'X' : 'O')
+  const status = winner ? 'Winner: ' + winner : 'Next player: ' + (xIsNext ? 'X' : 'O')
 
   const gameBoard = (
   <div className="game">
